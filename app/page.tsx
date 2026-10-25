@@ -1,31 +1,21 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import {
-  Terminal,
   Shield,
   Zap,
   Activity,
-  Layers,
-  Cpu,
   GitBranch,
   ArrowRight,
   Check,
   Copy,
   ChevronRight,
   Database,
-  RefreshCw,
-  Server,
   Lock,
-  Flame,
-  Globe,
-  Sliders,
   Play,
   AlertTriangle,
-  FileCode2,
   ExternalLink,
   ChevronDown,
-  Sparkles,
 } from "lucide-react";
 
 export default function LandingPage() {
@@ -95,6 +85,60 @@ export default function LandingPage() {
   const cachedCost = Math.round(rawCost * 0.58); // 42% savings
   const savedDollars = rawCost - cachedCost;
 
+  const codeSnippets = {
+    typescript: `// 1. Initialize Axiom edge wrapper
+import { AxiomClient } from "@axiom-ai/runtime";
+
+const client = new AxiomClient({
+  apiKey: process.env.AXIOM_API_KEY,
+  guardrail: "strict", // Intercepts attacks < 8ms
+  hedging: { maxLatencyMs: 250 }, // Fallback if provider stalls
+});
+
+// 2. Standard call with built-in telemetry
+const res = await client.chat.completions.create({
+  model: "claude-3-7-sonnet",
+  stream: true,
+  messages: [{ role: "user", content: "Execute telemetry unit test" }]
+});`,
+    python: `# Drop-in replacement for OpenAI / Anthropic SDK
+from axiom import AxiomClient
+
+client = AxiomClient(
+    api_key="ax_live_9941a",
+    guardrail_policy="strict",
+    hedged_providers=["bedrock", "anthropic"]
+)
+
+response = client.chat.completions.create(
+    model="claude-3-7-sonnet",
+    messages=[{"role": "user", "content": "Execute autonomous pipeline."}]
+)`,
+    go: `// Low-latency Go runtime binding
+package main
+
+import (
+    "context"
+    "github.com/axiom-ai/axiom-go"
+)
+
+func main() {
+    client := axiom.NewClient("ax_live_9941a")
+    resp, err := client.Chat(context.Background(), axiom.ChatRequest{
+        Model: "deepseek-v3",
+        Prompt: "Stream deterministic telemetry",
+    })
+}`,
+    curl: `curl -X POST https://api.axiom.run/v1/chat/completions \\
+  -H "Authorization: Bearer $AXIOM_API_KEY" \\
+  -H "X-Axiom-Guardrail: strict" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "model": "claude-3-7-sonnet",
+    "messages": [{"role": "user", "content": "Run eval"}]
+  }'`,
+  };
+
   return (
     <div className="min-h-screen bg-[#09090b] text-neutral-100 font-sans selection:bg-neutral-800 selection:text-white">
       {/* Subtle Technical Top Border line */}
@@ -119,19 +163,19 @@ export default function LandingPage() {
           {/* Desktop Nav Links */}
           <nav className="hidden md:flex items-center space-x-8 text-xs font-mono tracking-wide text-neutral-400">
             <a href="#console" className="hover:text-neutral-100 transition-colors">
-              // ARCHITECTURE
+              {"// ARCHITECTURE"}
             </a>
             <a href="#features" className="hover:text-neutral-100 transition-colors">
-              // GUARDRAILS
+              {"// GUARDRAILS"}
             </a>
             <a href="#benchmarks" className="hover:text-neutral-100 transition-colors">
-              // BENCHMARKS
+              {"// BENCHMARKS"}
             </a>
             <a href="#integration" className="hover:text-neutral-100 transition-colors">
-              // SDK
+              {"// SDK"}
             </a>
             <a href="#pricing" className="hover:text-neutral-100 transition-colors">
-              // PRICING
+              {"// PRICING"}
             </a>
           </nav>
 
@@ -241,7 +285,7 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-8">
             <div>
-              <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">// LIVE TESTBENCH</div>
+              <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">{"// LIVE TESTBENCH"}</div>
               <h2 className="text-2xl sm:text-3xl font-bold text-neutral-100 mt-1">
                 Zero-overhead edge proxy in action.
               </h2>
@@ -404,15 +448,15 @@ export default function LandingPage() {
                       <div className="font-semibold text-neutral-200 mt-1">Client App</div>
                       <div className="text-[10px] text-neutral-400 mt-0.5">TLS Ingress / Envoy</div>
                     </div>
-                    <div className="text-neutral-600 text-center font-mono">────►</div>
+                    <div className="text-neutral-600 text-center font-mono">{"────►"}</div>
 
                     {/* Step 2 */}
                     <div className="p-3 rounded border border-emerald-800/80 bg-emerald-950/20">
                       <div className="text-[10px] text-emerald-400">STAGE 02 · 7.4ms</div>
                       <div className="font-semibold text-emerald-300 mt-1">Semantic Guardrail</div>
-                      <div className="text-[10px] text-emerald-500/80 mt-0.5">Jailbreak & PII Filter</div>
+                      <div className="text-[10px] text-emerald-500/80 mt-0.5">Jailbreak &amp; PII Filter</div>
                     </div>
-                    <div className="text-neutral-600 text-center font-mono">────►</div>
+                    <div className="text-neutral-600 text-center font-mono">{"────►"}</div>
 
                     {/* Step 3 */}
                     <div className="p-3 rounded border border-neutral-800 bg-neutral-900/60">
@@ -495,7 +539,7 @@ export default function LandingPage() {
       <section id="features" className="py-20 md:py-28 border-b border-neutral-800">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
-            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">// ARCHITECTURE SPEC</div>
+            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">{"// ARCHITECTURE SPEC"}</div>
             <h2 className="text-3xl sm:text-4xl font-bold text-neutral-100 mt-2 tracking-tight">
               Built for reliability, not parlor tricks.
             </h2>
@@ -614,7 +658,7 @@ export default function LandingPage() {
       <section id="benchmarks" className="py-20 md:py-28 border-b border-neutral-800 bg-[#0c0c0e]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto">
-            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">// LATENCY &amp; COST DYNAMICS</div>
+            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">{"// LATENCY & COST DYNAMICS"}</div>
             <h2 className="text-3xl sm:text-4xl font-bold text-neutral-100 mt-2">
               Measurable cost reduction at enterprise volume.
             </h2>
@@ -713,7 +757,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Copy */}
             <div className="lg:col-span-5 space-y-4">
-              <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">// DROP-IN INTEGRATION</div>
+              <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">{"// DROP-IN INTEGRATION"}</div>
               <h2 className="text-3xl sm:text-4xl font-bold text-neutral-100 tracking-tight">
                 Two lines of code. Zero refactoring.
               </h2>
@@ -759,17 +803,7 @@ export default function LandingPage() {
                   </div>
 
                   <button
-                    onClick={() => {
-                      const snippet =
-                        codeLang === "typescript"
-                          ? `import { AxiomClient } from "@axiom-ai/runtime";\n\nconst client = new AxiomClient({\n  apiKey: process.env.AXIOM_API_KEY,\n  guardrail: "strict",\n  hedging: { maxLatencyMs: 250 }\n});\n\nconst res = await client.chat({\n  model: "claude-3-7-sonnet",\n  messages: [{ role: "user", content: "Summarize dataset." }]\n});`
-                          : codeLang === "python"
-                          ? `from axiom import AxiomClient\n\nclient = AxiomClient(\n    api_key="ax_live_9941a",\n    guardrail_policy="strict",\n    hedged_providers=["bedrock", "anthropic"]\n)\n\nresponse = client.chat.completions.create(\n    model="claude-3-7-sonnet",\n    messages=[{"role": "user", "content": "Execute agent."}]\n)`
-                          : codeLang === "go"
-                          ? `package main\n\nimport "github.com/axiom-ai/axiom-go"\n\nfunc main() {\n    client := axiom.NewClient("ax_live_9941a")\n    resp, _ := client.Chat(ctx, axiom.ChatRequest{\n        Model: "deepseek-v3",\n        Prompt: "Stream deterministic telemetry",\n    })\n}`
-                          : `curl -X POST https://api.axiom.run/v1/chat/completions \\\n  -H "Authorization: Bearer $AXIOM_KEY" \\\n  -H "X-Axiom-Guardrail: strict" \\\n  -d '{"model": "claude-3-7-sonnet", "messages": [{"role":"user","content":"Run eval"}]}'`;
-                      handleCopy(snippet, "code-snippet");
-                    }}
+                    onClick={() => handleCopy(codeSnippets[codeLang], "code-snippet")}
                     className="p-1.5 rounded hover:bg-neutral-800 text-neutral-400 hover:text-neutral-200 transition-colors flex items-center space-x-1 text-xs font-mono"
                   >
                     {copiedSnippet === "code-snippet" ? (
@@ -788,98 +822,9 @@ export default function LandingPage() {
 
                 {/* Code body */}
                 <div className="p-5 font-mono text-xs overflow-x-auto text-neutral-300 bg-neutral-950">
-                  {codeLang === "typescript" && (
-                    <pre className="leading-relaxed">
-                      <span className="text-neutral-500">// 1. Initialize Axiom edge wrapper</span>
-                      {"\n"}
-                      <span className="text-amber-400">import</span> &#123; AxiomClient &#125;{" "}
-                      <span className="text-amber-400">from</span>{" "}
-                      <span className="text-emerald-300">"@axiom-ai/runtime"</span>;{"\n\n"}
-                      <span className="text-amber-400">const</span> client ={" "}
-                      <span className="text-amber-400">new</span>{" "}
-                      <span className="text-neutral-100">AxiomClient</span>(&#123;{"\n"}
-                      {"  "}apiKey: process.env.
-                      <span className="text-emerald-300">AXIOM_API_KEY</span>,{"\n"}
-                      {"  "}guardrail: <span className="text-emerald-300">"strict"</span>,{" "}
-                      <span className="text-neutral-500">// Intercepts attacks &lt;8ms</span>
-                      {"\n"}
-                      {"  "}hedging: &#123; maxLatencyMs: <span className="text-emerald-400">250</span> &#125;,{" "}
-                      <span className="text-neutral-500">// Fallback if provider stalls</span>
-                      {"\n"}&#125;);{"\n\n"}
-                      <span className="text-neutral-500">// 2. Standard call with built-in telemetry</span>
-                      {"\n"}
-                      <span className="text-amber-400">const</span> res ={" "}
-                      <span className="text-amber-400">await</span> client.chat.
-                      <span className="text-neutral-100">completions</span>.
-                      <span className="text-neutral-100">create</span>(&#123;{"\n"}
-                      {"  "}model: <span className="text-emerald-300">"claude-3-7-sonnet"</span>,{"\n"}
-                      {"  "}stream: <span className="text-emerald-400">true</span>,{"\n"}
-                      {"  "}messages: [&#123; role: <span className="text-emerald-300">"user"</span>, content:{" "}
-                      <span className="text-emerald-300">"Execute telemetry unit test"</span> &#125;]{"\n"}
-                      &#125;);
-                    </pre>
-                  )}
-
-                  {codeLang === "python" && (
-                    <pre className="leading-relaxed">
-                      <span className="text-neutral-500"># Drop-in replacement for OpenAI / Anthropic SDK</span>
-                      {"\n"}
-                      <span className="text-amber-400">from</span> axiom{" "}
-                      <span className="text-amber-400">import</span> AxiomClient{"\n\n"}
-                      client = AxiomClient({" \n"}
-                      {"    "}api_key=<span className="text-emerald-300">"ax_live_9941a"</span>,{"\n"}
-                      {"    "}guardrail_policy=<span className="text-emerald-300">"strict"</span>,{"\n"}
-                      {"    "}hedged_providers=[<span className="text-emerald-300">"bedrock"</span>,{" "}
-                      <span className="text-emerald-300">"anthropic"</span>]{"\n"}
-                      ){"\n\n"}
-                      response = client.chat.completions.create({" \n"}
-                      {"    "}model=<span className="text-emerald-300">"claude-3-7-sonnet"</span>,{"\n"}
-                      {"    "}messages=[&#123;<span className="text-emerald-300">"role"</span>:{" "}
-                      <span className="text-emerald-300">"user"</span>,{" "}
-                      <span className="text-emerald-300">"content"</span>:{" "}
-                      <span className="text-emerald-300">"Execute autonomous pipeline."</span>&#125;]{"\n"}
-                      )
-                    </pre>
-                  )}
-
-                  {codeLang === "go" && (
-                    <pre className="leading-relaxed">
-                      <span className="text-neutral-500">// Low-latency Go runtime binding</span>
-                      {"\n"}
-                      <span className="text-amber-400">package</span> main{"\n\n"}
-                      <span className="text-amber-400">import</span> ({"\n"}
-                      {"    "}<span className="text-emerald-300">"context"</span>{"\n"}
-                      {"    "}<span className="text-emerald-300">"github.com/axiom-ai/axiom-go"</span>{"\n"}
-                      ){"\n\n"}
-                      <span className="text-amber-400">func</span> main() &#123;{"\n"}
-                      {"    "}client := axiom.NewClient(<span className="text-emerald-300">"ax_live_9941a"</span>){"\n"}
-                      {"    "}resp, err := client.Chat(context.Background(), axiom.ChatRequest&#123;{"\n"}
-                      {"        "}Model: <span className="text-emerald-300">"deepseek-v3"</span>,{"\n"}
-                      {"        "}Prompt: <span className="text-emerald-300">"Stream deterministic telemetry"</span>,{"\n"}
-                      {"    "}&#125;){"\n"}
-                      &#125;
-                    </pre>
-                  )}
-
-                  {codeLang === "curl" && (
-                    <pre className="leading-relaxed">
-                      <span className="text-neutral-500"># Direct HTTP API call</span>
-                      {"\n"}
-                      curl -X POST https://api.axiom.run/v1/chat/completions \{"\n"}
-                      {"  "}-H <span className="text-emerald-300">"Authorization: Bearer $AXIOM_API_KEY"</span> \{"\n"}
-                      {"  "}-H <span className="text-emerald-300">"X-Axiom-Guardrail: strict"</span> \{"\n"}
-                      {"  "}-H <span className="text-emerald-300">"Content-Type: application/json"</span> \{"\n"}
-                      {"  "}-d &#39;&#123;{"\n"}
-                      {"    "}<span className="text-emerald-300">"model"</span>:{" "}
-                      <span className="text-emerald-300">"claude-3-7-sonnet"</span>,{"\n"}
-                      {"    "}<span className="text-emerald-300">"messages"</span>: [&#123;
-                      <span className="text-emerald-300">"role"</span>:{" "}
-                      <span className="text-emerald-300">"user"</span>,{" "}
-                      <span className="text-emerald-300">"content"</span>:{" "}
-                      <span className="text-emerald-300">"Run eval"</span>&#125;]{"\n"}
-                      {"  "}&#125;&#39;
-                    </pre>
-                  )}
+                  <pre className="leading-relaxed whitespace-pre font-mono">
+                    {codeSnippets[codeLang]}
+                  </pre>
                 </div>
               </div>
             </div>
@@ -891,7 +836,7 @@ export default function LandingPage() {
       <section id="pricing" className="py-20 md:py-28 border-b border-neutral-800 bg-[#0c0c0e]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto">
-            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">// TRANSPARENT PRICING</div>
+            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">{"// TRANSPARENT PRICING"}</div>
             <h2 className="text-3xl sm:text-4xl font-bold text-neutral-100 mt-2">
               Simple tiers. Pay for compute, not hype.
             </h2>
@@ -1044,7 +989,7 @@ export default function LandingPage() {
       <section className="py-20 md:py-24 border-b border-neutral-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">// SPECIFICATIONS &amp; FAQ</div>
+            <div className="text-xs font-mono text-emerald-400 uppercase tracking-widest">{"// SPECIFICATIONS & FAQ"}</div>
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-100 mt-2">
               Frequently Answered Questions
             </h2>
@@ -1132,7 +1077,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pb-10 border-b border-neutral-800/80">
             <div>
-              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">// PLATFORM</div>
+              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">{"// PLATFORM"}</div>
               <ul className="space-y-2">
                 <li><a href="#console" className="hover:text-neutral-100 transition-colors">Runtime Engine</a></li>
                 <li><a href="#features" className="hover:text-neutral-100 transition-colors">Semantic Guardrail</a></li>
@@ -1141,7 +1086,7 @@ export default function LandingPage() {
               </ul>
             </div>
             <div>
-              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">// RESOURCES</div>
+              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">{"// RESOURCES"}</div>
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-neutral-100 transition-colors">API Specification</a></li>
                 <li><a href="#" className="hover:text-neutral-100 transition-colors">SDK Documentation</a></li>
@@ -1150,7 +1095,7 @@ export default function LandingPage() {
               </ul>
             </div>
             <div>
-              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">// OPEN SOURCE</div>
+              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">{"// OPEN SOURCE"}</div>
               <ul className="space-y-2">
                 <li><a href="#" className="hover:text-neutral-100 transition-colors">GitHub Repository</a></li>
                 <li><a href="#" className="hover:text-neutral-100 transition-colors">Rust Runtime Core</a></li>
@@ -1159,7 +1104,7 @@ export default function LandingPage() {
               </ul>
             </div>
             <div>
-              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">// NETWORK HEALTH</div>
+              <div className="text-neutral-200 font-semibold mb-3 tracking-wider">{"// NETWORK HEALTH"}</div>
               <div className="space-y-2 text-neutral-400">
                 <div className="flex items-center space-x-2 text-emerald-400">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-signal" />
