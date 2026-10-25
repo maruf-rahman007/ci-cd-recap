@@ -44,5 +44,29 @@ jobs:
           context: .
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-recap:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/ci-cd-recap:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/my-app:${{ github.sha }}
+
+  deploy:
+    name: Deploy to AWS EC2
+    needs: cd
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy container on EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+            docker stop my-app || true
+            docker rm my-app || true
+            docker run -d \
+              --name my-app \
+              --restart always \
+              -p 3000:3000 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
+            docker image prune -af
